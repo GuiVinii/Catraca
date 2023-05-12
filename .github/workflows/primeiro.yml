@@ -1,0 +1,47 @@
+# This workflow will build a Java project with Ant
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
+
+name: Java CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    - name: Compilar o Java
+      run: |
+            cd src
+            javac -cp . Main.java
+            
+    - name: Compilar o Teste
+      run: |
+            cd src
+            javac -cp . ControleAcessoTest.java
+            
+    - name: Executar o Teste
+      run: |
+            cd src
+            java ControleAcessoTest.java
+
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      name: Build & push Docker image
+      with:
+          image: joaofrangogameplays/cracha
+          tags: 1.0
+          registry: docker.io
+          dockerfile: dockerfile
+          username: ${{ secrets.DOCKERE_USER }}
+          password: ${{ secrets.DOCKERE_PASSWORD }}
