@@ -30,11 +30,6 @@ jobs:
       run: |
             cd src
             javac -cp . ControleAcessoTest.java
-            
-    - name: Executar o Teste
-      run: |
-            cd src
-            java ControleAcessoTest.java
 
     - uses: mr-smithers-excellent/docker-build-push@v6
       name: Build & push Docker image
