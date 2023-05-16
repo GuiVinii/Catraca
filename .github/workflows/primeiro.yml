@@ -40,8 +40,10 @@ jobs:
           dockerfile: dockerfile
           username: ${{ secrets.DOCKERE_USER }}
           password: ${{ secrets.DOCKERE_PASSWORD }}
-
-    - name: Versionamento automático
-      uses: codex-src/version-tag@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    - name: Git Version
+      # You may pin to the exact commit or the version.
+      # uses: codacy/git-version@fa06788276d7492a2af01662649696d249ecf4cb
+      uses: codacy/git-version@2.4.0
+      with:
+       # The name of the release branch
+       release-branch: main
